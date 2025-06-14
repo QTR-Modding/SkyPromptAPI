@@ -23,6 +23,18 @@ target_include_directories(your_target PRIVATE ${SkyPromptAPI_INCLUDE_DIRS})
 
 This is a header-only library; no linking is needed.
 
+To use the SkyPrompt API port locally, copy the cmake/ folder from the SkyPrompt API repository into your project:
+
+```markdown
+your-project/
+└── cmake/
+    └── ports/
+        └── skyprompt-api/
+            ├── portfile.cmake
+            └── vcpkg.json
+
+```
+
 ---
 
 ## Tutorial
