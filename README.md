@@ -34,10 +34,3 @@ your-project/
             └── vcpkg.json
 
 ```
-
----
-
-## Tutorial
-https://www.nexusmods.com/skyrimspecialedition/articles/10207
-
----
