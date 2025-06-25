@@ -6,6 +6,9 @@
 
 namespace SkyPromptAPI {
 
+    constexpr int MAJOR = 1;
+    constexpr int MINOR = 0;
+
     #define DECLARE_API_FUNC_EX(                               \
         localName,   /* The name you call in your code */      \
         hostName,    /* The name actually exported by DLL */   \
@@ -81,14 +84,15 @@ namespace SkyPromptAPI {
         virtual ~PromptSink() = default;
     };
 
-    DECLARE_API_FUNC_EX(
-        RequestClientID,                          /* localName */
-        "ProcessRequestClientID",                     /* hostName */
-        ClientID,                                       /* returnType */
-        0,                                      /* defaultValue */
-        (), /* signature */
-        ()         /* callArgs */
-    );
+
+
+    DECLARE_API_FUNC_EX(RequestClientID,"ProcessRequestClientID",ClientID,0,(int a_major, int a_minor),(a_major, a_minor));
+
+
+
+    inline ClientID RequestClientID() {
+        return RequestClientID(MAJOR, MINOR);
+    }
 
     DECLARE_API_FUNC_EX(
         SendPrompt,                          /* localName */
