@@ -4,9 +4,9 @@
 #pragma once
 #include <windows.h>
 
-namespace SkyPromptAPI {
+namespace SkyPromptAPI_v1 {
 
-    constexpr int MAJOR = 2;
+    constexpr int MAJOR = 1;
     constexpr int MINOR = 0;
 
     #define DECLARE_API_FUNC_EX(                               \
@@ -55,9 +55,8 @@ namespace SkyPromptAPI {
 		RE::FormID refid;
         std::span<const std::pair<RE::INPUT_DEVICE, ButtonID>> button_key;
         uint32_t text_color;
-        float progress;
-        explicit Prompt(const std::string_view a_text="", const EventID a_eventID=0, const ActionID a_actionID=0, const PromptType a_type=PromptType::kSinglePress, const RE::FormID a_refid=0, const std::span<const std::pair<RE::INPUT_DEVICE, ButtonID>> a_button_key={}, const uint32_t a_text_color=0xFFFFFFFF, const float a_progress=0.f) :
-			text(a_text), eventID(a_eventID), actionID(a_actionID), type(a_type), refid(a_refid), button_key(a_button_key), text_color(a_text_color), progress(a_progress) {}
+        explicit Prompt(const std::string_view a_text="", const EventID a_eventID=0, const ActionID a_actionID=0, const PromptType a_type=PromptType::kSinglePress, const RE::FormID a_refid=0, const std::span<const std::pair<RE::INPUT_DEVICE, ButtonID>> a_button_key={}, const uint32_t a_text_color=0xFFFFFFFF) :
+			text(a_text), eventID(a_eventID), actionID(a_actionID), type(a_type), refid(a_refid), button_key(a_button_key), text_color(a_text_color) {}
 	};
 
 	enum PromptEventType : std::uint8_t {
