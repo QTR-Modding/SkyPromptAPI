@@ -113,4 +113,12 @@ namespace SkyPromptAPI {
         (a_sink, a_clientID)         /* callArgs */
     );
 
+    DECLARE_API_FUNC_EX(
+        RequestTheme,
+        "ProcessRequestTheme",
+        bool,
+        false,
+        (ClientID a_clientID, std::string_view theme_name),
+        (a_clientID, theme_name)
+    );
 };
