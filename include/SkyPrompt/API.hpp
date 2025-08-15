@@ -105,12 +105,12 @@ namespace SkyPromptAPI {
     );
 
     DECLARE_API_FUNC_EX(
-        RemovePrompt,                          /* localName */
-        "ProcessRemovePrompt",                     /* hostName */
-        void,                                       /* returnType */
-        ,                                      /* defaultValue */
-        (const PromptSink* a_sink, ClientID a_clientID), /* signature */
-        (a_sink, a_clientID)         /* callArgs */
+        RemovePrompt,
+        "ProcessRemovePrompt",
+        void,
+        ,
+        (const PromptSink* a_sink, ClientID a_clientID),
+        (a_sink, a_clientID)
     );
 
     DECLARE_API_FUNC_EX(
@@ -121,4 +121,5 @@ namespace SkyPromptAPI {
         (ClientID a_clientID, std::string_view theme_name),
         (a_clientID, theme_name)
     );
+
 };
