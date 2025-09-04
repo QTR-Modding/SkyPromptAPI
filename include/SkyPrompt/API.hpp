@@ -45,6 +45,7 @@ namespace SkyPromptAPI {
         kSinglePress,
         kHold,
         kHoldAndKeep,
+        kHint
     };
 
 	struct Prompt {
