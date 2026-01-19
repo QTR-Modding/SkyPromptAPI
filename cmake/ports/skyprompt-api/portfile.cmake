@@ -10,4 +10,4 @@ vcpkg_from_github(
 # Install codes
 set(SkyPromptAPI_SOURCE	${SOURCE_PATH}/include/SkyPrompt)
 file(INSTALL ${SkyPromptAPI_SOURCE} DESTINATION ${CURRENT_PACKAGES_DIR}/include)
-vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/NOTICE")
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
