@@ -1,5 +1,5 @@
-// Author: A. Ege Yilmaz
-// Year: 2025
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2025-2026 A. Ege Yilmaz
 
 #pragma once
 #include <windows.h>
