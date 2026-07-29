@@ -32,6 +32,7 @@ namespace SkyPromptAPI {
     }
 
 	using ClientID = uint16_t;
+    using HandshakeKey = uint64_t;
 	using EventID = uint16_t;
 	using ActionID = uint16_t;
 	using ButtonID = uint32_t; // RE::BSWin32KeyboardDevice::Key, RE::BSWin32MouseDevice::Key, RE::BSWin32GamepadDevice::Key, RE::BSPCOrbisGamepadDevice::Key
@@ -99,6 +100,14 @@ namespace SkyPromptAPI {
     }
 
     DECLARE_API_FUNC_EX(
+        RequestHandshake, 
+        "ProcessRequestHandshake", 
+        bool, 
+        false,
+        (ClientID a_clientID, HandshakeKey a_key, HandshakeKey a_otherKey),
+        (a_clientID, a_key, a_otherKey));
+
+    DECLARE_API_FUNC_EX(
         SendPrompt,                          /* localName */
         "ProcessSendPrompt",                     /* hostName */
         bool,                                       /* returnType */
@@ -123,6 +132,5 @@ namespace SkyPromptAPI {
         false,
         (ClientID a_clientID, std::string_view theme_name),
         (a_clientID, theme_name)
-    );
-
+    )
 };
