@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(
 	SkyPromptAPI
-	VERSION 2.0.2
+	VERSION 2.0.3
 	LANGUAGES CXX
 )
 
