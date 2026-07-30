@@ -64,8 +64,8 @@ install(
 )
 
 install(
-	DIRECTORY include
-	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/include
+	DIRECTORY include/
+	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 configure_file(
