@@ -48,11 +48,23 @@ This option is made available to mod authors who need to display more than 4 but
 |-------|--------------|
 | font_name | The font to use (must be installed by the mod). <br>Including the extension is recommended (e.g. Jost-Regular.ttf). |
 | font_shadow | Strength of a soft shadow behind text (0 = none, higher = stronger) |
-| prompt_alignment | How prompts are arranged: "vertical", "horizontal", or "radial" |
+| prompt_alignment | How prompts are arranged: "vertical", "horizontal", "radial", or "diamond" |
 | prompt_order | Whether the icon or text appears first: `"icon-first"` or `"text-first"` (default: `"icon-first"`) |
-| prompt_pivot | Which point of the prompt content is anchored to its screen position: `"top-left"`, `"top-right"`, `"bottom-left"`, `"bottom-right"`, or `"center"` (default: `"bottom-right"`). Applies to vertical and horizontal layouts. |
+| prompt_pivot | Which point of the prompt content is anchored to its screen position: `"top-left"`, `"top-right"`, `"bottom-left"`, `"bottom-right"`, or `"center"` (default: `"bottom-right"`). Applies to vertical, horizontal, and diamond layouts. |
 | fadeSpeed | How quickly prompts fade in/out (smaller = slower) |
 | progress_speed | How fast a “hold” / progress circle fills |
+
+#### Diamond Layout
+
+`diamond` places Button1 at the bottom, Button2 on the right, Button3 on the left, and Button4 at the top. Further buttons repeat this order. The bottom and top rows grow left to right; the right and left columns grow top to bottom.
+
+With `icon-first`, bottom/right buttons place the icon first, while left/top buttons place the text first. `text-first` reverses this.
+
+#### Exporting a Theme In-Game
+
+Open SkyPrompt's Theme page and select **Export Theme**. Enter a filename; SkyPrompt saves the current settings to `Data\SKSE\Plugins\SkyPrompt\themes\<name>.json`. Reusing a filename overwrites it.
+
+Use **Reload Themes** after overwriting a loaded theme. A new filename appears after restarting the game.
 
 #### Special Visual Effects (Advanced – AddOn Needed)
 
