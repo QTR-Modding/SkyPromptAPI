@@ -177,7 +177,7 @@ EndEvent
 
 ## Using Themes
 
-You can assign a custom visual theme to your ClientID so your prompts use a different layout, fonts, animation speeds, alignment (vertical, horizontal, radial, etc.), and special effects.<br>
+You can assign a custom visual theme to your ClientID so your prompts use a different layout, fonts, animation speeds, alignment (vertical, horizontal, radial, or diamond), and special effects.<br>
 Themes are implemented via JSON files. See [here](https://github.com/QTR-Modding/SkyPromptAPI/wiki/How-to-create-Themes%3F) for how to create these.
 
 ### Example
