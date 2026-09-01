@@ -22,8 +22,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Check out main
         uses: actions/checkout@v7
+        with:
+          ref: main
 
       - name: Publish wiki
         env:
@@ -36,8 +38,8 @@ jobs:
           rsync --archive --delete --exclude='.git/' docs/wiki/ wiki-target/
 
           # Preserve the existing wiki page names that Windows cannot check out.
-          mv -- wiki-target/How-to-create-Themes.md 'wiki-target/How-to-create-Themes?.md'
-          mv -- wiki-target/Whats-Changed.md 'wiki-target/Whats-Changed?.md'
+          if [ -e "wiki-target/How-to-create-Themes.md" ]; then mv -- "wiki-target/How-to-create-Themes.md" "wiki-target/How-to-create-Themes?.md"; fi
+          if [ -e "wiki-target/Whats-Changed.md" ]; then mv -- "wiki-target/Whats-Changed.md" "wiki-target/Whats-Changed?.md"; fi
 
           git -C wiki-target config user.name "github-actions[bot]"
           git -C wiki-target config user.email "41898282+github-actions[bot]@users.noreply.github.com"
