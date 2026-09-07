@@ -1,92 +1,190 @@
-### Theme JSON – Simple Guide
+## Create a theme
 
-A “theme” is a .json file that tells SkyPrompt how the prompts should look (position, size, colors, effects, etc.).  
-You can edit these with any text editor (Notepad, VS Code, etc.).
+A theme controls how SkyPrompt's prompts look: their layout, position, size, font, and effects.
+You can create one in-game or edit its JSON file in a text editor.
 
-Put your theme files here:
-`Data\SKSE\Plugins\SkyPrompt\themes\`
+### Start in-game
 
----
+1. Open **SkyPrompt > Theme** in the Mod Control Panel.
+2. Choose the theme marked **(active)** to edit the prompts currently shown. The selector chooses what you edit; it does not make other mods use that theme.
+3. Adjust **Layout**, **Position**, **Appearance**, and **Animation**. Close the menu to see the result.
+4. Choose **Export Theme**, edit the suggested name if you want, and export. Enter the name without `.json`; SkyPrompt adds it.
 
-#### Basic Info
+Theme files go in `Data\SKSE\Plugins\SkyPrompt\themes\`. For example, exporting as
+`MyTheme` creates `MyTheme.json`.
 
-| Field | What it is |
-|-------|------------|
-| name | A name for your theme |
-| description | A short explanation |
-| author | Your name or nickname |
-| version | Your version label |
+<a name="exporting-a-theme-in-game"></a>
 
-#### Position on Screen
+| Action | What it does |
+| --- | --- |
+| Edit **Default** | Changes the fallback appearance for mods without an assigned theme. Changes save automatically to `Data\SKSE\Plugins\SkyPrompt\settings.json`. |
+| **Save Theme** | Saves your edits to the selected named theme's existing file. Until you save, those edits last only for the current session or until reloaded. |
+| **Export Theme** | Writes the selected theme's settings to the filename you enter. An existing file with that name is overwritten. |
+| **Reload Themes** | Rereads already-loaded theme files, replacing any unsaved menu edits. It does not discover new filenames; restart Skyrim after adding a new file. |
 
-| Field | What it does | Typical Values |
-|-------|--------------|----------------|
-| xPercent | Horizontal placement (0 = far left, 1 = far right) | 0.85 (near right) |
-| yPercent | Vertical placement (0 = top, 1 = bottom) | 0.85 (lower area) |
-| marginX | Extra left/right offset (added after xPercent) | 0–40 |
-| marginY | Extra up/down offset | 0–40 |
+Editing a file in the themes folder does not change **Default**.
 
-#### Size & Spacing
+### Use the theme in a mod
 
-| Field | What it does |
-|-------|--------------|
-| n_max_buttons | Maximum number of (not-stacked) prompts to display |
-| prompt_size | General size of the prompt buttons/text |
-| icon2font_ratio | Makes icons bigger or smaller vs the text (1.0 = same size) |
-| linespacing | Space between prompts |
+Creating a file does not automatically assign it to a mod. After registering with
+SkyPrompt, a mod can request a theme for its `clientID` (the ID returned by registration):
 
-> ⚠️**Important**⚠️<br>
-Please use the `n_max_buttons` setting wisely!<br>
-SkyPrompt by default limits this to 4.<br>
-The reason for this is not to block an excessive number of buttons that will harm the user experience, especially for gamepad users!<br>
-If you are blocking more than 4 buttons, please reconsider your design!<br>
-This option is made available to mod authors who need to display more than 4 buttons <u>**whose inputs are not blocked**</u>, e.g. by using the Seal of Akatosh "button" or the prompt type `kHint`.
+```cpp
+SkyPromptAPI::RequestTheme(clientID, "MyTheme");
+```
 
-#### Look & Feel
+In Papyrus, the equivalent is:
 
-| Field | What it does |
-|-------|--------------|
-| font_name | The font to use (must be installed by the mod). <br>Including the extension is recommended (e.g. Jost-Regular.ttf). |
-| font_shadow | Strength of a soft shadow behind text (0 = none, higher = stronger) |
-| prompt_alignment | How prompts are arranged: "vertical", "horizontal", "radial", or "diamond" |
-| prompt_order | Whether the icon or text appears first: `"icon-first"` or `"text-first"` (default: `"icon-first"`) |
-| prompt_pivot | Which point of the prompt content is anchored to its screen position: `"top-left"`, `"top-right"`, `"bottom-left"`, `"bottom-right"`, or `"center"` (default: `"bottom-right"`). Applies to vertical, horizontal, and diamond layouts. |
-| fadeSpeed | How quickly prompts fade in/out (smaller = slower) |
-| progress_speed | How fast a “hold” / progress circle fills |
+```papyrus
+SkyPrompt.RequestTheme(clientID, "MyTheme")
+```
 
-#### Diamond Layout
+Use the **filename without `.json`**, not the `name` written inside the file.
+See the [C++ tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(cpp)#optional-requesting-a-theme)
+or [Papyrus tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(Papyrus)#using-themes) for registration and complete examples.
 
-`diamond` places Button1 at the bottom, Button2 on the right, Button3 on the left, and Button4 at the top. Further buttons repeat this order. The bottom and top rows grow left to right; the right and left columns grow top to bottom.
+To change a theme an existing mod already uses, edit that file and press **Reload Themes**.
+You can also export to that same filename and reload it. Ship your theme at the
+same path under `Data` so users receive the file your mod requests.
 
-With `icon-first`, bottom/right buttons place the icon first, while left/top buttons place the text first. `text-first` reverses this.
+<a name="example"></a>
 
-#### Exporting a Theme In-Game
+### Start with JSON instead
 
-Open SkyPrompt's Theme page and select **Export Theme**. Enter a filename; SkyPrompt saves the current settings to `Data\SKSE\Plugins\SkyPrompt\themes\<name>.json`. Reusing a filename overwrites it.
+Save this as `MyTheme.json` in the themes folder, then use it as described above:
 
-Use **Reload Themes** after overwriting a loaded theme. A new filename appears after restarting the game.
+```json
+{
+    "name": "My Theme",
+    "prompt_alignment": "vertical",
+    "prompt_order": "icon-first",
+    "prompt_size": 45.65
+}
+```
+
+You can leave out settings you do not need. Missing fields use built-in theme-file
+defaults, not your edited Default theme or values from a previously requested theme.
+Export from the menu if you want a file that captures all your current settings.
+
+Use decimal points for size, position, spacing, speed, and other float settings:
+`1.0`, not `1`. Write `n_max_buttons` and effect IDs as integers, such as `4`.
+
+<a name="diamond-layout"></a>
+
+## Layouts
+
+Choose **Prompt Alignment** in the menu or set `prompt_alignment` in JSON.
+
+| Value | Arrangement |
+| --- | --- |
+| `vertical` | A column of prompts, from top to bottom. |
+| `horizontal` | A row of prompts, from left to right. |
+| `radial` | A curved column, with the icons and text rotated along the curve. |
+| `diamond` | Bottom, right, left, then top. Further prompts repeat that order. Bottom/top rows grow left to right; left/right columns grow top to bottom. |
+| `list` | A scrollable column. Only the selected prompt shows a button icon; the other visible prompts show text only. |
+
+### Icon and text order
+
+`prompt_order` controls the order **within a prompt**, not which prompt comes first.
+Use `"icon-first"` for the icon before the text, or `"text-first"` for the reverse.
+
+Diamond alternates this around its four sides: with `"icon-first"`, bottom/right
+are icon-first and left/top are text-first. `"text-first"` reverses all four.
+These positions do not depend on physical gamepad buttons; users can rebind their controls.
+
+### Prompt count and scrolling
+
+`n_max_buttons` defaults to `4`. Use a positive integer.
+
+1. **Vertical, Horizontal, Radial, and Diamond:** it limits the number of separate prompts. Actions stacked on the same prompt share that slot.
+2. **List:** it limits the number of visible rows, not the total. The mouse wheel or D-pad Up/Down selects other rows, scrolling when needed. Arrows show more rows above or below. Skyrim's **Activate** control operates the selected prompt, using that prompt's press/hold behavior.
+
+Outside List, keep the number of input-blocking prompts small, especially for
+gamepad users. More rows can also be useful for non-blocking prompts such as
+[`kHint`](https://github.com/QTR-Modding/SkyPromptAPI/wiki/Prompt-Types).
+The menu's **Max Buttons** control is available only in Debug builds; authors can set it in JSON.
+
+<details>
+<summary>Theme fields and defaults</summary>
+
+These defaults apply when a field is missing from a theme file.
+
+### Basic Info
+
+| Field | Meaning |
+| --- | --- |
+| `name` | Display name for the theme. Theme requests still use the filename. |
+| `description` | A short description. |
+| `author` | Your name or nickname. |
+| `version` | Your theme's version label. |
+
+### Position on Screen
+
+The position is an **anchor**: a point where SkyPrompt places the prompt group.
+The pivot chooses which part of the group sits on that point.
+Resolution-scaled pixels adjust with the game's display scale.
+
+| Field | Meaning | Default |
+| --- | --- | --- |
+| `xPercent` | Horizontal anchor position: `0.0` is the left edge, `1.0` is the right edge. | `0.85` |
+| `yPercent` | Vertical anchor position: `0.0` is the top edge, `1.0` is the bottom edge. | `0.85` |
+| `marginX` | Offset in resolution-scaled pixels. Positive moves left; negative moves right. | `0.0` |
+| `marginY` | Offset in resolution-scaled pixels. Positive moves up; negative moves down. | `0.0` |
+| `prompt_pivot` | `"top-left"`, `"top-right"`, `"bottom-left"`, `"bottom-right"`, or `"center"`. Applies to every layout except Radial. | `"bottom-right"` |
+
+For example, `xPercent: 1.0` with `marginX: 40.0` places the anchor 40
+resolution-scaled pixels left of the right edge. With `"bottom-right"` as the pivot,
+the group extends left and up from its anchor.
+
+For prompts attached to world objects, the object supplies the anchor instead of
+`xPercent`/`yPercent`. Margins still apply.
+
+### Size & Spacing
+
+| Field | Meaning | Default |
+| --- | --- | --- |
+| `n_max_buttons` | Separate prompt limit, or visible row count in List. See [Prompt count and scrolling](#prompt-count-and-scrolling). | `4` |
+| `prompt_size` | Text size in resolution-scaled pixels. Icons scale with it. | `45.65` |
+| `icon2font_ratio` | Icon size relative to the text size. `1.0` uses the same size. | `1.0` |
+| `linespacing` | Extra spacing between prompts. Higher values spread them farther apart. | `0.267` |
+
+### Look & Feel
+
+| Field | Meaning | Default |
+| --- | --- | --- |
+| `prompt_alignment` | One of the five [layouts](#layouts). | `"vertical"` |
+| `prompt_order` | `"icon-first"` or `"text-first"`; see [Icon and text order](#icon-and-text-order). | `"icon-first"` |
+| `font_name` | Font filename, including `.ttf` or `.otf`, from `Data\Interface\ImGuiIcons\Fonts\`. Include any custom font in your mod. | `"Jost-Regular.ttf"` |
+| `font_shadow` | Text shadow opacity: `0.0` is none, `1.0` is fully opaque. | `0.2` |
+| `fadeSpeed` | Fade-in/out speed. Higher is faster; use a positive value. | `0.02` |
+| `progress_speed` | How quickly a held button fills its progress circle. Higher values shorten progress-based holds; use a positive value. | `0.552` |
+
+</details>
 
 <a name="special-visual-effects-advanced--addon-needed"></a>
 
-#### Special Visual Effects
+## Special Visual Effects
 
-Special effects change how prompts look. You can set them up in-game without editing JSON.
+Open **Special Effects > Add Effect** in the Theme editor. Choose an effect,
+expand its settings, and adjust it. The X beside its name removes it.
+You can combine different effects.
 
-##### Try it in-game
+| Effect | What it does | JSON ID |
+| --- | --- | --- |
+| Viny Arcs | Decorative glowing arcs around the prompt group. | `1` |
+| Text Background | A colored background behind each prompt's text, excluding the icon. | `2` |
+| Progress Circle | Customizes the progress circle, track, and feedback marks. | `3` |
+| List Indicators | Customizes the arrows for hidden List rows. | `4` |
+| Activation Pop | Adds a growing, fading copy when a prompt is activated. **Icon Only** leaves out the text. | `5` |
 
-Activation Pop adds a growing, fading copy when you activate a prompt.
+Normal progress feedback and List arrows already appear without adding effects.
+Add Progress Circle or List Indicators to change or hide them. Activation Pop is
+triggered by activating a prompt, not by moving the List selection.
 
-1. Open **SkyPrompt > Theme** in the Mod Control Panel and choose the theme marked **(active)**.
-2. Open **Special Effects**, choose **Add Effect**, then **Activation Pop**.
-3. Enable **Icon Only** if you want just the button icon to pop. Close the menu and activate a prompt to try it.
+### Effects in JSON
 
-You can adjust the pop's duration, size, and opacity, or leave the defaults.
-The X beside an effect removes it. Use **Save Theme** to keep changes to a named
-theme; **Default** saves automatically. **Export Theme** saves a separate theme file.
-
-##### Edit a theme file
-
-Here is a complete, minimal theme with Activation Pop:
+Add `special_effects` to a theme. It is a list, with one entry per effect;
+`special_effect` identifies the effect by its number above. For example:
 
 ```json
 {
@@ -97,19 +195,8 @@ Here is a complete, minimal theme with Activation Pop:
 }
 ```
 
-`special_effects` is the list of effects to use. Each entry's `special_effect`
-number identifies an effect; `5` means Activation Pop. Settings you leave out use
-their defaults.
-
-When editing an existing theme, keep its other fields and change only its
-`special_effects` section.
-After editing the file your mod uses, press **Reload Themes**. Creating a file
-with a new name does not automatically make a mod use it.
-
-##### Combine effects
-
-Add another entry to the list. This example combines a text background with an
-icon-only activation pop:
+This complete theme enables Activation Pop with its defaults. To combine it with
+a text background and make the pop icon-only:
 
 ```json
 {
@@ -121,27 +208,14 @@ icon-only activation pop:
 }
 ```
 
-The background gets 8 pixels of horizontal padding, 4 pixels of vertical padding,
+The background has 8 pixels of horizontal padding, 4 pixels of vertical padding,
 and a 3-pixel corner radius. The pop's `true` turns on **Icon Only**.
+When editing an existing theme, keep its other fields and change only the effects.
 
 <details>
-<summary>JSON settings reference</summary>
+<summary>Effect parameters and defaults</summary>
 
-###### Effect numbers
-
-| Number | Effect |
-| --- | --- |
-| 1 | Viny Arcs |
-| 2 | Text Background |
-| 3 | Progress Circle |
-| 4 | List Indicators |
-| 5 | Activation Pop |
-
-For Viny Arcs and Text Background details, see the [SkyPrompt AddOn wiki](https://github.com/QTR-Modding/SkyPromptAddOn/wiki).
-Normal progress feedback and List arrows do not need an effect entry. Add effect
-3 or 4 to customize or hide them. Activation Pop appears only when you add effect 5.
-
-###### Reading the settings
+### Reading the settings
 
 `special_floats` holds decimal numbers, `special_bools` holds `true`/`false`
 switches, and `special_integers` holds whole numbers such as colors.
@@ -152,13 +226,28 @@ first value. For example, Activation Pop's `[0.3, 1.25, 0.6]` means a duration o
 0.3 seconds, an end scale of 1.25, and an opacity of 0.6. To change a later value,
 include the earlier values too. You can leave out trailing values to keep their defaults.
 
-Write decimal values with a decimal point, such as `1.0` rather than `1`.
 For colors, use the in-game color picker and **Export Theme** to get the numbers
 for your JSON. For manual conversion, the format is unsigned packed ABGR, written
 as a decimal integer. Color `0` is fully transparent. In the color defaults below,
-alpha ranges from 0 (transparent) to 255 (opaque).
+RGBA means red, green, blue, and alpha; each ranges from 0 to 255, with alpha
+controlling transparency.
 
-###### Progress Circle (ID 3)
+### Viny Arcs (ID 1)
+
+See the [Viny Arcs settings](https://github.com/QTR-Modding/SkyPromptAddOn/wiki/Special-Effects#effect-1-layered-gradient-arcs)
+in the AddOn wiki for its colors, offsets, and switches.
+
+### Text Background (ID 2)
+
+`special_floats`, in order: horizontal padding, vertical padding, corner radius.
+All default to `0.0` and use screen pixels. Padding is added to each side of the
+text, so horizontal padding of `8.0` adds 8 pixels on both the left and right.
+Negative padding shrinks the background; a negative corner radius is treated as zero.
+
+`special_integers`: background color, default black with alpha 128
+(`2147483648`). There are no boolean or text settings.
+
+### Progress Circle (ID 3)
 
 These settings change the circle's appearance, not how long an action must be held.
 
@@ -181,7 +270,7 @@ remove marker (RGBA 147,39,41,180), skip marker (RGBA 228,185,76,100).
 special-command marks, clockwise. All default to `true`. Turning clockwise off
 also mirrors the arc's starting position to the other side of the hold marker.
 
-###### List Indicators (ID 4)
+### List Indicators (ID 4)
 
 These settings control the arrows that show when more List rows are hidden above or below.
 
@@ -199,7 +288,7 @@ These settings control the arrows that show when more List rows are hidden above
 `special_bools`: show arrows, default `true`. Hiding arrows or setting their size
 to zero also removes their reserved space. This effect applies only to List.
 
-###### Activation Pop (ID 5)
+### Activation Pop (ID 5)
 
 The pop is a temporary copy of the activated icon and text. It grows and fades
 without moving the original. **Icon Only** leaves out the text and grows the icon
@@ -218,12 +307,21 @@ from its center.
 The full copy includes the text shadow, but not the progress circle or text
 background. It can finish after the original prompt disappears. There are no color settings.
 
-###### Older theme files
+### Older theme files
 
 The older single-effect format still works. If a file contains both that format
 and `special_effects`, the list takes precedence. An empty list (`"special_effects": []`)
 removes configured effects; normal progress circles and List arrows remain.
 In the older format, `"special_effect": 0` means no extra effect.
+For example, this older Text Background theme still works:
+
+```json
+{
+    "name": "My Theme",
+    "special_effect": 2,
+    "special_floats": [8.0, 4.0, 3.0]
+}
+```
 
 </details>
 
@@ -231,20 +329,10 @@ In the older format, `"special_effect": 0` means no extra effect.
 <summary>For developers adding a new effect to SkyPrompt</summary>
 
 The source paths below are in the [SkyPrompt repository](https://github.com/QTR-Modding/SkyPrompt).
+
 1. Choose an unused effect number and keep existing numbers unchanged. IDs 1-2 belong to SkyPromptAddOn; IDs 3-5 belong to SkyPrompt.
 2. Add the parameter names, defaults, ranges, and effect definition in `src/ImGui/PromptEffects.h/.cpp`. Add the effect to the Theme menu's supported effects in `src/MCP.cpp`.
 3. Add drawing code to the appropriate existing prompt drawing module. Add English labels and help text to both `src/Translations.cpp` and `Interface/Translations/SkyPrompt_ENGLISH.txt`.
 4. Document the settings on this page. Check defaults, custom values, menu editing, save/reload, export, and drawing in the relevant layouts. Effects implemented in SkyPrompt ship with SkyPrompt, not SkyPromptAddOn.
 
 </details>
-
----
-
-### Example
-
-SkyPrompt is shipped with example theme files. Please see those or other mods that use the theme feature.
-
-### Tips
-
-- You can remove any field you don’t use; defaults will be applied.
-- If you are going to switch between themes using the same client ID, make sure to specify all JSON fields you intend to use in all your themes.
