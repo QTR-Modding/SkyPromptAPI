@@ -102,7 +102,6 @@ These positions do not depend on physical gamepad buttons; users can rebind thei
 Outside List, keep the number of input-blocking prompts small, especially for
 gamepad users. More rows can also be useful for non-blocking prompts such as
 [`kHint`](https://github.com/QTR-Modding/SkyPromptAPI/wiki/Prompt-Types).
-The menu's **Max Buttons** control is available only in Debug builds; authors can set it in JSON.
 
 <details>
 <summary>Theme fields and defaults</summary>
@@ -325,14 +324,9 @@ For example, this older Text Background theme still works:
 
 </details>
 
-<details>
-<summary>For developers adding a new effect to SkyPrompt</summary>
+## Community effects
 
-The source paths below are in the [SkyPrompt repository](https://github.com/QTR-Modding/SkyPrompt).
-
-1. Choose an unused effect number and keep existing numbers unchanged. IDs 1-2 belong to SkyPromptAddOn; IDs 3-5 belong to SkyPrompt.
-2. Add the parameter names, defaults, ranges, and effect definition in `src/ImGui/PromptEffects.h/.cpp`. Add the effect to the Theme menu's supported effects in `src/MCP.cpp`.
-3. Add drawing code to the appropriate existing prompt drawing module. Add English labels and help text to both `src/Translations.cpp` and `Interface/Translations/SkyPrompt_ENGLISH.txt`.
-4. Document the settings on this page. Check defaults, custom values, menu editing, save/reload, export, and drawing in the relevant layouts. Effects implemented in SkyPrompt ship with SkyPrompt, not SkyPromptAddOn.
-
-</details>
+[SkyPromptAddOn](https://github.com/QTR-Modding/SkyPromptAddOn) is the community
+repository for creating and sharing new SkyPrompt effects. Contributions belong
+there: follow its [guide to adding effects](https://github.com/QTR-Modding/SkyPromptAddOn/wiki/Special-Effects#adding-more-effects)
+and open a pull request in the AddOn repository.
