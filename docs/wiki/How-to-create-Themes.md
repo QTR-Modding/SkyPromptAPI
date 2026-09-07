@@ -326,7 +326,6 @@ For example, this older Text Background theme still works:
 
 ## Community effects
 
-[SkyPromptAddOn](https://github.com/QTR-Modding/SkyPromptAddOn) is the community
-repository for creating and sharing new SkyPrompt effects. Contributions belong
-there: follow its [guide to adding effects](https://github.com/QTR-Modding/SkyPromptAddOn/wiki/Special-Effects#adding-more-effects)
-and open a pull request in the AddOn repository.
+[SkyPromptAddOn](https://github.com/QTR-Modding/SkyPromptAddOn) contains community-created special effects.
+Its [guide](https://github.com/QTR-Modding/SkyPromptAddOn/wiki/Special-Effects#adding-more-effects)
+explains how to add an effect.
