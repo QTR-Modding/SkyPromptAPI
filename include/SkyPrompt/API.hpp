@@ -2,7 +2,6 @@
 // Copyright (c) 2025-2026 A. Ege Yilmaz
 
 #pragma once
-#include "RE/Skyrim.h"
 #include <windows.h>
 
 namespace SkyPromptAPI {
