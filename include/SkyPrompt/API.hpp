@@ -2,6 +2,7 @@
 // Copyright (c) 2025-2026 A. Ege Yilmaz
 
 #pragma once
+#include "RE/Skyrim.h"
 #include <windows.h>
 
 namespace SkyPromptAPI {
@@ -123,6 +124,15 @@ namespace SkyPromptAPI {
         ,
         (const PromptSink* a_sink, ClientID a_clientID),
         (a_sink, a_clientID)
+    );
+
+    DECLARE_API_FUNC_EX(
+        RemovePromptByID,
+        "ProcessRemovePromptByID",
+        bool,
+        false,
+        (const PromptSink* a_sink, ClientID a_clientID, EventID a_eventID, ActionID a_actionID),
+        (a_sink, a_clientID, a_eventID, a_actionID)
     );
 
     DECLARE_API_FUNC_EX(
