@@ -5,7 +5,7 @@ See [here](https://github.com/QTR-Modding/SkyPrompt/blob/main/include/Renderer.h
 If the sink is already queued, `SendPrompt` returns `false`, even when it restores missing prompts.<br>
 In order to **update/refresh** one of the **mutables**, simply call `SendPrompt` again with your updated parameters/prompts.
 
-`SendPrompt` also restores any removed or dismissed prompts still returned by `GetPrompts()`. Existing prompts are refreshed in place, without switching the selected stacked action or client page. To keep a prompt removed when sending again, leave it out of `GetPrompts()`.
+`SendPrompt` also restores any removed or dismissed prompts still returned by `GetPrompts()`. Rows follow the event order in `GetPrompts()`, with stacked actions sharing one row. Existing prompts are refreshed in place, without switching the selected stacked action, List selection, or client page. To keep a prompt removed when sending again, leave it out of `GetPrompts()`.
 
 # Progress Circle
 ## Controlling the Progress Circle
