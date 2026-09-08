@@ -2,8 +2,10 @@
 
 You can use `SendPrompt` also to **refresh** your prompts if they're already visible.<br>
 See [here](https://github.com/QTR-Modding/SkyPrompt/blob/main/include/Renderer.h#L12) for **`ButtonMutables`**, i.e., things you can refresh.<br>
-Note that in this case, `SendPrompt` will return `false`, which is expected behavior, since your prompts are already displayed.<br>
+If the sink is already queued, `SendPrompt` returns `false`, even when it restores missing prompts.<br>
 In order to **update/refresh** one of the **mutables**, simply call `SendPrompt` again with your updated parameters/prompts.
+
+`SendPrompt` also restores any removed or dismissed prompts still returned by `GetPrompts()`. Existing prompts are refreshed in place, without switching the selected stacked action or client page. To keep a prompt removed when sending again, leave it out of `GetPrompts()`.
 
 # Progress Circle
 ## Controlling the Progress Circle

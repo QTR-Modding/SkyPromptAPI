@@ -169,7 +169,9 @@ Both IDs must match. Other prompts keep their current appearance and lifetime; t
 
 The call returns `true` when it removes the matching submission, or `false` if there is no match or the installed SkyPrompt does not support this function. It does not send a removal event. Pending events for that prompt are cancelled; other prompts' events are kept. You can call it from `ProcessEvent`.
 
-This does not edit the prompts returned by `GetPrompts()`. Keep using the two-argument `RemovePrompt()` before deleting the sink. If another sink submitted the same client/event/action combination, that sink's prompt remains.
+This does not edit the prompts returned by `GetPrompts()`. Calling `SendPrompt()` again restores all prompts returned by the sink, including removed or dismissed ones. Leave a prompt out of `GetPrompts()` if it should stay removed when sending again.
+
+Keep using the two-argument `RemovePrompt()` before deleting the sink. If another sink submitted the same client/event/action combination, that sink's prompt remains.
 
 ## Handling Prompt Events
 Once you send your prompts, the user can interact with these by pressing the corresponding button.
