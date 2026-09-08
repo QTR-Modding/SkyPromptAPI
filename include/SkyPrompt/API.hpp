@@ -126,6 +126,15 @@ namespace SkyPromptAPI {
     );
 
     DECLARE_API_FUNC_EX(
+        RemovePromptByID,
+        "ProcessRemovePromptByID",
+        bool,
+        false,
+        (const PromptSink* a_sink, ClientID a_clientID, EventID a_eventID, ActionID a_actionID),
+        (a_sink, a_clientID, a_eventID, a_actionID)
+    );
+
+    DECLARE_API_FUNC_EX(
         RequestTheme,
         "ProcessRequestTheme",
         bool,

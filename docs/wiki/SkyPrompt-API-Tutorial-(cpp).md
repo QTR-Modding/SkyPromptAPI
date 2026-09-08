@@ -159,6 +159,20 @@ SkyPromptAPI::RemovePrompt(your_PromptSinkPtr, your_clientID);
 If you are deleting your sink, you MUST call RemovePrompt BEFORE deleting your sink! <br>
 Failing to do so will result in CTD!
 
+To remove just one prompt from a sink:
+
+```c++
+bool removed = SkyPromptAPI::RemovePromptByID(your_PromptSinkPtr, your_clientID, eventID, actionID);
+```
+
+Both IDs must match. Other prompts keep their current appearance and lifetime; the sink does not need to be removed and sent again. Event and action ID `0` are valid values, not wildcards.
+
+The call returns `true` when it removes the matching submission, or `false` if there is no match or the installed SkyPrompt does not support this function. It does not send a removal event. Pending events for that prompt are cancelled; other prompts' events are kept. You can call it from `ProcessEvent`.
+
+This does not edit the prompts returned by `GetPrompts()`. Calling `SendPrompt()` again restores all prompts returned by the sink, including removed or dismissed ones. Leave a prompt out of `GetPrompts()` if it should stay removed when sending again.
+
+Keep using the two-argument `RemovePrompt()` before deleting the sink. If another sink submitted the same client/event/action combination, that sink's prompt remains.
+
 ## Handling Prompt Events
 Once you send your prompts, the user can interact with these by pressing the corresponding button.
 There are different types of interactions possible depending on the `PromptType` of your prompts.
