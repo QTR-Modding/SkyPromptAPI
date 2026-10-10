@@ -175,6 +175,8 @@ You can combine different effects.
 | Progress Circle | Customizes the progress circle, track, and feedback marks. | `3` |
 | List Indicators | Customizes the arrows for hidden List rows. | `4` |
 | Activation Pop | Adds a growing, fading copy when a prompt is activated. **Icon Only** leaves out the text. | `5` |
+| Separator | Divides different clients' prompt groups with a line in Vertical, List, and Horizontal layouts. | `6` |
+| Frame | Draws a border around the whole visible prompt area, including icons and text. | `7` |
 
 Normal progress feedback and List arrows already appear without adding effects.
 Add Progress Circle or List Indicators to change or hide them. Activation Pop is
@@ -305,6 +307,11 @@ from its center.
 
 The full copy includes the text shadow, but not the progress circle or text
 background. It can finish after the original prompt disappears. There are no color settings.
+
+### Separator (ID 6) and Frame (ID 7)
+
+See the [Separator and Frame examples and settings](https://github.com/QTR-Modding/SkyPromptAddOn/wiki/Special-Effects#effects-6-and-7-separator-and-frame)
+in the AddOn wiki. Both can be added and customized in the Theme editor.
 
 ### Older theme files
 
