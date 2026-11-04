@@ -180,6 +180,13 @@ EndEvent
 You can assign a custom visual theme to your ClientID so your prompts use a different layout, fonts, animation speeds, alignment (vertical, horizontal, radial, or diamond), and special effects.<br>
 Themes are implemented via JSON files. See [here](https://github.com/QTR-Modding/SkyPromptAPI/wiki/How-to-create-Themes%3F) for how to create these.
 
+If this client is active, the requested theme applies immediately.
+Pass an empty name to return it to the Default theme:
+
+```papyrus
+SkyPrompt.RequestTheme(clientID, "")
+```
+
 ### Example
 
 Minimal quest script snippet that uses the JSON file **SkyPromptTestScriptTheme.json**.<br>
