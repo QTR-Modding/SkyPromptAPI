@@ -198,7 +198,7 @@ Themes are implemented via JSON files. See [here](https://github.com/QTR-Modding
 ```c++
 bool ok = SkyPromptAPI::RequestTheme(clientID, "MyThemeFileName");
 if (!ok) {
-    // Theme not found or invalid clientID; default theme will be used.
+    // Request failed; the client's theme is unchanged.
 }
 ```
 
@@ -208,14 +208,17 @@ Key points:
   `Data\SKSE\Plugins\SkyPrompt\themes\`
 - The JSON filename (without `.json`) MUST be used in `RequestTheme`.
 - Calling `RequestTheme` again with the same name reloads the file.
+- If this client is active, the requested theme applies immediately.
 - Returns `true` on success, `false` if:
   - `clientID == 0`
-  - `themeName` empty
   - Theme not found in the loaded set
+  - The theme file is missing, unreadable, or invalid JSON
 
-### Example
+Pass an empty name to return this client to the Default theme:
 
-SkyPrompt switches between its Tutorial and Default themes. See source code.
+```cpp
+SkyPromptAPI::RequestTheme(clientID, "");
+```
 
 ### Tips
 

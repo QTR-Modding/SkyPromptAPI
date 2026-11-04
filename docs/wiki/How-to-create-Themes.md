@@ -40,6 +40,17 @@ SkyPrompt.RequestTheme(clientID, "MyTheme")
 ```
 
 Use the **filename without `.json`**, not the `name` written inside the file.
+If this client is active, the requested theme applies immediately.
+Pass an empty name to return it to the Default theme:
+
+```cpp
+SkyPromptAPI::RequestTheme(clientID, "");
+```
+
+```papyrus
+SkyPrompt.RequestTheme(clientID, "")
+```
+
 See the [C++ tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(cpp)#optional-requesting-a-theme)
 or [Papyrus tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(Papyrus)#using-themes) for registration and complete examples.
 
