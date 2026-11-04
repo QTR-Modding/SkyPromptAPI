@@ -198,7 +198,7 @@ Themes are implemented via JSON files. See [here](https://github.com/QTR-Modding
 ```c++
 bool ok = SkyPromptAPI::RequestTheme(clientID, "MyThemeFileName");
 if (!ok) {
-    // Theme not found or clientID is zero; the assigned theme is unchanged.
+    // Request failed; the client's theme is unchanged.
 }
 ```
 
@@ -212,6 +212,7 @@ Key points:
 - Returns `true` on success, `false` if:
   - `clientID == 0`
   - Theme not found in the loaded set
+  - The theme file is missing, unreadable, or invalid JSON
 
 Pass an empty name to return this client to the Default theme:
 
