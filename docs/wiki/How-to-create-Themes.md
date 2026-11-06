@@ -51,12 +51,40 @@ SkyPromptAPI::RequestTheme(clientID, "");
 SkyPrompt.RequestTheme(clientID, "")
 ```
 
+For a registered client, a missing theme or a file that cannot be read or parsed switches it to Default and returns `false`. An invalid client ID returns `false` without changing any theme.
+
 See the [C++ tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(cpp)#optional-requesting-a-theme)
 or [Papyrus tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(Papyrus)#using-themes) for registration and complete examples.
 
 To change a theme an existing mod already uses, edit that file and press **Reload Themes**.
 You can also export to that same filename and reload it. Ship your theme at the
 same path under `Data` so users receive the file your mod requests.
+
+### Sharing themes between clients
+
+For two clients that have completed a handshake:
+
+```cpp
+SkyPromptAPI::RequestTheme(clientA, "Dialogue");
+SkyPromptAPI::RequestTheme(clientB, "Actions");
+```
+
+Their prompts appear together on one page, with a separate group for each theme.
+A page is the whole display the player cycles between. Each group has its own
+layout, position, font, and effects. In this example, A uses `Dialogue.json` and
+B uses `Actions.json`; edit those files to customize their groups.
+
+1. If no client requests a theme, all use Default in one group.
+2. If only one distinct theme is requested, all share it in one group.
+3. Different requested themes create separate groups. Clients requesting the same theme share a group.
+4. A client without a theme request inherits one of the requested themes. Request a theme explicitly if the choice matters.
+
+An empty-name request explicitly selects Default; it counts as a theme request.
+Changing a request can merge or split groups while their prompts are displayed.
+
+Handshaking clients must coordinate positions and controls. Each group starts
+its fallback bindings at Button 1, so different groups can receive the same key.
+Two List groups both respond to Activate and the same scrolling controls.
 
 <a name="example"></a>
 
