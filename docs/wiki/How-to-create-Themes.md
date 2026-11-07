@@ -51,12 +51,30 @@ SkyPromptAPI::RequestTheme(clientID, "");
 SkyPrompt.RequestTheme(clientID, "")
 ```
 
+For a registered client, a missing theme or a file that cannot be read or parsed switches it to Default and returns `false`. An invalid client ID returns `false` without changing any theme.
+
 See the [C++ tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(cpp)#optional-requesting-a-theme)
 or [Papyrus tutorial](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-(Papyrus)#using-themes) for registration and complete examples.
 
 To change a theme an existing mod already uses, edit that file and press **Reload Themes**.
 You can also export to that same filename and reload it. Ship your theme at the
 same path under `Data` so users receive the file your mod requests.
+
+### Sharing themes between clients on the same page
+
+Clients with a handshake can show their prompts together on the same **Page**.
+A Page is the whole display the player cycles between. Cycling shows different prompt pages with different prompts (see [Compatibility Handshakes](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-%28cpp%29#compatibility-handshakes)).
+
+Clients sharing a page due to handshake:
+
+1. If nobody requests a theme, all prompts use Default.
+2. If one theme is requested, all prompts share it.
+3. If different themes are requested, prompts are separated into **Groups**, **each with its own theme**. Clients requesting the same theme share a Group.
+4. A client without a theme request uses one of the requested themes. Request a theme explicitly if the choice matters.
+
+**Passing `""` explicitly in RequestTheme selects the Default theme.**
+
+Handshaking authors must coordinate positions and controls with each other.
 
 <a name="example"></a>
 

@@ -64,6 +64,8 @@ Clients retain their own client IDs. Prompt events are still delivered with the 
 
 Call `RequestHandshake` after obtaining a non-zero client ID and preferably before sending the first prompt.
 
+See [theme sharing](https://github.com/QTR-Modding/SkyPromptAPI/wiki/How-to-create-Themes%3F#sharing-themes-between-clients-on-the-same-page) for how compatible clients share themes and coordinate controls.
+
 A return value of `true` means the request was accepted; it may still be waiting for the reciprocal request. `false` means the client ID was invalid.
 
 ---
@@ -181,6 +183,7 @@ You can assign a custom visual theme to your ClientID so your prompts use a diff
 Themes are implemented via JSON files. See [here](https://github.com/QTR-Modding/SkyPromptAPI/wiki/How-to-create-Themes%3F) for how to create these.
 
 If this client is active, the requested theme applies immediately.
+If the theme cannot be found or loaded, a registered client switches to Default and the call returns `false`.
 Pass an empty name to return it to the Default theme:
 
 ```papyrus
