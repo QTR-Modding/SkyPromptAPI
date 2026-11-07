@@ -62,29 +62,19 @@ same path under `Data` so users receive the file your mod requests.
 
 ### Sharing themes between clients
 
-For two clients that have completed a handshake:
+Clients with a handshake can show their prompts together on the same **Page**.
+A Page is the whole display the player cycles between. Cycling shows different prompt pages with different prompts (see [Compatibility Handshakes](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-%28cpp%29#compatibility-handshakes)).
 
-```cpp
-SkyPromptAPI::RequestTheme(clientA, "Dialogue");
-SkyPromptAPI::RequestTheme(clientB, "Actions");
-```
+Clients sharing a page due to handshake:
 
-Their prompts appear together on one page, with a separate group for each theme.
-A page is the whole display the player cycles between. Each group has its own
-layout, position, font, and effects. In this example, A uses `Dialogue.json` and
-B uses `Actions.json`; edit those files to customize their groups.
+1. If nobody requests a theme, all prompts use Default.
+2. If one theme is requested, all prompts share it.
+3. If different themes are requested, prompts are separated into **Groups**, **each with its own theme**. Clients requesting the same theme share a Group.
+4. A client without a theme request uses one of the requested themes. Request a theme explicitly if the choice matters.
 
-1. If no client requests a theme, all use Default in one group.
-2. If only one distinct theme is requested, all share it in one group.
-3. Different requested themes create separate groups. Clients requesting the same theme share a group.
-4. A client without a theme request inherits one of the requested themes. Request a theme explicitly if the choice matters.
+**Passing `""` explicitly in RequestTheme selects the Default theme.**
 
-An empty-name request explicitly selects Default; it counts as a theme request.
-Changing a request can merge or split groups while their prompts are displayed.
-
-Handshaking clients must coordinate positions and controls. Each group starts
-its fallback bindings at Button 1, so different groups can receive the same key.
-Two List groups both respond to Activate and the same scrolling controls.
+Handshaking authors must coordinate positions and controls with each other.
 
 <a name="example"></a>
 
