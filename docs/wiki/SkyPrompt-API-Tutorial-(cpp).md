@@ -139,7 +139,7 @@ Clients retain their own client IDs. Prompt events are still delivered to the or
 
 Call `RequestHandshake` after obtaining a non-zero client ID and preferably before sending the first prompt.
 
-See [theme sharing](https://github.com/QTR-Modding/SkyPromptAPI/wiki/How-to-create-Themes%3F#sharing-themes-between-clients) for how compatible clients share themes and coordinate controls.
+See [theme sharing](https://github.com/QTR-Modding/SkyPromptAPI/wiki/How-to-create-Themes%3F#sharing-themes-between-clients-on-the-same-page) for how compatible clients share themes and coordinate controls.
 
 A return value of `true` means the request was accepted; it may still be waiting for the reciprocal request. `false` means the request was invalid.
 

@@ -60,7 +60,7 @@ To change a theme an existing mod already uses, edit that file and press **Reloa
 You can also export to that same filename and reload it. Ship your theme at the
 same path under `Data` so users receive the file your mod requests.
 
-### Sharing themes between clients
+### Sharing themes between clients on the same page
 
 Clients with a handshake can show their prompts together on the same **Page**.
 A Page is the whole display the player cycles between. Cycling shows different prompt pages with different prompts (see [Compatibility Handshakes](https://github.com/QTR-Modding/SkyPromptAPI/wiki/SkyPrompt-API-Tutorial-%28cpp%29#compatibility-handshakes)).
